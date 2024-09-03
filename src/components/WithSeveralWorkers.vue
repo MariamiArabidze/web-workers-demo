@@ -11,11 +11,11 @@
         <input v-model.number="workerCount" type="number" placeholder="Enter number of workers" class="input-number" />
         <button @click="prepareCalculation" class="calculate-button">Calculate Primes</button>
         
-        <div class="result-section" v-if="primeNumbers.length > 0">
+        <div class="result-section" v-if="hasCompleted">
           <h2>Calculation completed in {{ calculationTime }} milliseconds.</h2>
-          <div class="result-list">
+          <!-- <div class="result-list">
             <div v-for="prime in primeNumbers" :key="prime" class="result-item">{{ prime }}</div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -25,11 +25,12 @@
   export default {
     data() {
       return {
-        maxNumber: 10000000, // Default to 10 million
+        maxNumber: 100000000, // Default to 100 million
         primeNumbers: [], // Array to store prime numbers
         calculationTime: 0, // Time taken for calculation
         workerCount: 4, // Default number of workers (chunks)
         workers: [], // Array to store workers
+        hasCompleted: false
       };
     },
     methods: {
@@ -61,7 +62,8 @@
   console.log(start, end)
           worker.onmessage = (event) => {
             // Collect results from each worker
-            this.primeNumbers = this.primeNumbers.concat(event.data);
+            // this.primeNumbers = this.primeNumbers.concat(event.data);
+            console.log(event)
             completedWorkers += 1;
   
             // Terminate the worker once done
@@ -70,8 +72,8 @@
             // Check if all workers are done
             if (completedWorkers === this.workerCount) {
               // Sort the collected prime numbers
-              this.primeNumbers.sort((a, b) => a - b);
-  
+            //   this.primeNumbers.sort((a, b) => a - b);
+  this.hasCompleted = true
               // Calculate the total time taken
               const endTime = performance.now();
               this.calculationTime = Math.round(endTime - startTime);

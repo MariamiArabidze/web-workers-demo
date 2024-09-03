@@ -11,9 +11,9 @@
       
       <div class="result-section" v-if="primeNumbers.length > 0">
         <h2>Congrats! You just wasted {{ calculationTime }} milliseconds of your life.</h2>
-        <div class="result-list">
+        <!-- <div class="result-list">
           <div v-for="prime in primeNumbers" :key="prime" class="result-item">{{ prime }}</div>
-        </div>
+        </div> -->
       </div>
 
       <div class="register-section">
